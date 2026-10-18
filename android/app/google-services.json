@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "992499754113",
+    "project_id": "measurement-app-b4708",
+    "storage_bucket": "measurement-app-b4708.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:992499754113:android:639b9c62d1c8bc20221980",
+        "android_client_info": {
+          "package_name": "com.pooja.measureapp.measurement_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOd1o0jynNlR935XcHfs9BrmKNUGFmyLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
