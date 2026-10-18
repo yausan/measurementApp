@@ -227,6 +227,7 @@ class ProjectListScreen extends StatelessWidget {
             ],
           ),
           floatingActionButton: FloatingActionButton.extended(
+            heroTag: 'fab_project_list',
             backgroundColor: AppTheme.accentCyan,
             foregroundColor: Colors.black,
             onPressed: () {

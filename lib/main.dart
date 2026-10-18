@@ -76,6 +76,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
         children: screens,
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'fab_main_shell',
         backgroundColor: AppTheme.accentCyan,
         foregroundColor: Colors.black,
         icon: const Icon(Icons.add_rounded, fontWeight: FontWeight.bold),
