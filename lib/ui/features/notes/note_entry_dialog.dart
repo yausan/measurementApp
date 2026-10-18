@@ -4,8 +4,9 @@ import '../../core/theme.dart';
 
 class NoteEntryDialog extends StatefulWidget {
   final String projectId;
+  final String? defaultAuthor;
 
-  const NoteEntryDialog({super.key, required this.projectId});
+  const NoteEntryDialog({super.key, required this.projectId, this.defaultAuthor});
 
   @override
   State<NoteEntryDialog> createState() => _NoteEntryDialogState();
@@ -30,7 +31,7 @@ class _NoteEntryDialogState extends State<NoteEntryDialog> {
       projectId: widget.projectId,
       content: _contentController.text.trim(),
       category: _selectedCategory,
-      author: 'Pooja Basoula (Field Tech)',
+      author: widget.defaultAuthor ?? 'Field Technician',
       isPinned: _isPinned,
     );
 

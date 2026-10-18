@@ -43,4 +43,26 @@ class ProjectRepository {
   Future<SyncResult> syncAll() => _syncService.syncAllProjects();
 
   Future<SyncResult> syncProject(String projectId) => _syncService.syncSingleProject(projectId);
+
+  String getDeviceId() => _storage.getDeviceId();
+
+  String getTechnicianName() => _storage.getTechnicianName();
+
+  Future<void> setTechnicianName(String name) => _storage.setTechnicianName(name);
+
+  String getTechnicianRole() => _storage.getTechnicianRole();
+
+  Future<void> setTechnicianRole(String role) => _storage.setTechnicianRole(role);
+
+  String getTechnicianEmail() => _storage.getTechnicianEmail();
+
+  Future<void> setTechnicianEmail(String email) => _storage.setTechnicianEmail(email);
+
+  String getTechnicianPhone() => _storage.getTechnicianPhone();
+
+  Future<void> setTechnicianPhone(String phone) => _storage.setTechnicianPhone(phone);
+
+  String getCompanyName() => _storage.getCompanyName();
+
+  Future<void> setCompanyName(String company) => _storage.setCompanyName(company);
 }

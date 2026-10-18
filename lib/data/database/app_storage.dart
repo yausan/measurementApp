@@ -11,6 +11,10 @@ class AppStorage {
   static const String _isOfflineModeKey = 'pooja_is_simulated_offline';
   static const String _deviceIdKey = 'pooja_device_unique_id';
   static const String _technicianNameKey = 'pooja_technician_name';
+  static const String _technicianRoleKey = 'app_technician_role';
+  static const String _technicianEmailKey = 'app_technician_email';
+  static const String _technicianPhoneKey = 'app_technician_phone';
+  static const String _companyNameKey = 'app_company_name';
 
   final SharedPreferences _prefs;
 
@@ -36,11 +40,43 @@ class AppStorage {
   }
 
   String getTechnicianName() {
-    return _prefs.getString(_technicianNameKey) ?? 'Pooja Basoula (Field Tech)';
+    return _prefs.getString(_technicianNameKey) ?? 'Field Technician';
   }
 
   Future<void> setTechnicianName(String name) async {
     await _prefs.setString(_technicianNameKey, name);
+  }
+
+  String getTechnicianRole() {
+    return _prefs.getString(_technicianRoleKey) ?? 'Lead Field Estimator';
+  }
+
+  Future<void> setTechnicianRole(String role) async {
+    await _prefs.setString(_technicianRoleKey, role);
+  }
+
+  String getTechnicianEmail() {
+    return _prefs.getString(_technicianEmailKey) ?? '';
+  }
+
+  Future<void> setTechnicianEmail(String email) async {
+    await _prefs.setString(_technicianEmailKey, email);
+  }
+
+  String getTechnicianPhone() {
+    return _prefs.getString(_technicianPhoneKey) ?? '';
+  }
+
+  Future<void> setTechnicianPhone(String phone) async {
+    await _prefs.setString(_technicianPhoneKey, phone);
+  }
+
+  String getCompanyName() {
+    return _prefs.getString(_companyNameKey) ?? 'UniSC Partner Building Solutions';
+  }
+
+  Future<void> setCompanyName(String company) async {
+    await _prefs.setString(_companyNameKey, company);
   }
 
   Future<void> _seedIfEmpty() async {

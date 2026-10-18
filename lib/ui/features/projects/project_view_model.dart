@@ -160,4 +160,27 @@ class ProjectViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  // Profile properties & updates
+  String get deviceId => _repository.getDeviceId();
+  String get technicianName => _repository.getTechnicianName();
+  String get technicianRole => _repository.getTechnicianRole();
+  String get technicianEmail => _repository.getTechnicianEmail();
+  String get technicianPhone => _repository.getTechnicianPhone();
+  String get companyName => _repository.getCompanyName();
+
+  Future<void> updateProfile({
+    required String name,
+    required String role,
+    required String email,
+    required String phone,
+    required String company,
+  }) async {
+    await _repository.setTechnicianName(name.trim());
+    await _repository.setTechnicianRole(role.trim());
+    await _repository.setTechnicianEmail(email.trim());
+    await _repository.setTechnicianPhone(phone.trim());
+    await _repository.setCompanyName(company.trim());
+    notifyListeners();
+  }
 }

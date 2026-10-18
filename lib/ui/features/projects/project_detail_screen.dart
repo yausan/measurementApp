@@ -66,7 +66,10 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> with SingleTi
   Future<void> _openAddNote() async {
     final result = await showDialog<SiteNote>(
       context: context,
-      builder: (_) => NoteEntryDialog(projectId: widget.projectId),
+      builder: (_) => NoteEntryDialog(
+        projectId: widget.projectId,
+        defaultAuthor: widget.viewModel.technicianName,
+      ),
     );
 
     if (result != null) {
@@ -156,7 +159,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> with SingleTi
                         Text('DATE: ${DateFormat('yyyy-MM-dd HH:mm').format(project.scheduledDate)}',
                             style: const TextStyle(fontSize: 12, color: Colors.white70)),
                         const SizedBox(height: 4),
-                        Text('FIELD OPERATOR: Pooja Basoula (SCI701 Field Lead)',
+                        Text('FIELD OPERATOR: ${project.technicianName}',
                             style: const TextStyle(fontSize: 12, color: AppTheme.accentCyan)),
                       ],
                     ),
@@ -218,7 +221,7 @@ class _ProjectDetailScreenState extends State<ProjectDetailScreen> with SingleTi
                 buffer.writeln('ADDRESS: ${project.siteAddress}');
                 buffer.writeln('PHONE: ${project.clientPhone}');
                 buffer.writeln('DATE: ${DateFormat('yyyy-MM-dd HH:mm').format(project.scheduledDate)}');
-                buffer.writeln('OPERATOR: Pooja Basoula (SCI701 Field Tech Lead)');
+                buffer.writeln('OPERATOR: ${project.technicianName}');
                 buffer.writeln('SYNC STATUS: ${project.syncStatus.name.toUpperCase()}');
                 buffer.writeln('==================================================');
                 buffer.writeln('RECORDED DIMENSIONS:');

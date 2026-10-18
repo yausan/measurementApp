@@ -4,6 +4,7 @@ import '../../core/widgets/sync_status_badge.dart';
 import '../projects/project_view_model.dart';
 import '../projects/project_detail_screen.dart';
 import '../projects/new_project_screen.dart';
+import '../profile/profile_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   final ProjectViewModel viewModel;
@@ -14,6 +15,13 @@ class DashboardScreen extends StatelessWidget {
     required this.viewModel,
     required this.onNavigateToTools,
   });
+
+  String _getInitials(String name) {
+    final parts = name.trim().split(RegExp(r'\s+'));
+    if (parts.isEmpty || parts[0].isEmpty) return 'OP';
+    if (parts.length == 1) return parts[0][0].toUpperCase();
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +52,17 @@ class DashboardScreen extends StatelessWidget {
                     : const Icon(Icons.sync_rounded),
                 onPressed: viewModel.isSyncing ? null : () => viewModel.syncAll(),
               ),
+              IconButton(
+                tooltip: 'Technician Profile',
+                icon: const Icon(Icons.account_circle_outlined, color: AppTheme.accentCyan),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => ProfileScreen(viewModel: viewModel),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
           body: SingleChildScrollView(
@@ -52,58 +71,89 @@ class DashboardScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Field Operator & Partner Banner
-                Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF0F172A), Color(0xFF1E293B)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => ProfileScreen(viewModel: viewModel),
+                      ),
+                    );
+                  },
+                  borderRadius: BorderRadius.circular(12),
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF0F172A), Color(0xFF1E293B)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: AppTheme.accentCyan.withValues(alpha: 0.4)),
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppTheme.accentCyan.withValues(alpha: 0.4)),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const CircleAvatar(
-                            backgroundColor: AppTheme.accentCyan,
-                            radius: 18,
-                            child: Text('PB',
-                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 13)),
-                          ),
-                          const SizedBox(width: 12),
-                          const Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('Pooja Basoula — Field Tech Lead',
-                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white)),
-                                Text('SCI701 Project 4 • On-site Measurement System',
-                                    style: TextStyle(fontSize: 11, color: AppTheme.accentCyan)),
-                              ],
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: AppTheme.accentCyan,
+                              radius: 18,
+                              child: Text(
+                                _getInitials(viewModel.technicianName),
+                                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 13),
+                              ),
                             ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: AppTheme.accentAmber.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(6),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    viewModel.technicianName,
+                                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.white),
+                                  ),
+                                  Text(
+                                    '${viewModel.technicianRole} • ${viewModel.companyName}',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(fontSize: 11, color: AppTheme.accentCyan),
+                                  ),
+                                ],
+                              ),
                             ),
-                            child: const Text('ISURU PARTNER',
-                                style: TextStyle(
-                                    fontSize: 10, color: AppTheme.accentAmber, fontWeight: FontWeight.bold)),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Offline-first field data collection eliminating manual paper recording and transcription errors.',
-                        style: TextStyle(fontSize: 12, color: Color(0xFF94A3B8)),
-                      ),
-                    ],
+                            const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Color(0xFF64748B)),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            const Expanded(
+                              child: Text(
+                                'Offline-first field data collection eliminating manual paper recording and transcription errors.',
+                                style: TextStyle(fontSize: 12, color: Color(0xFF94A3B8)),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: AppTheme.accentAmber.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                viewModel.deviceId,
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: AppTheme.accentAmber,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'monospace',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),

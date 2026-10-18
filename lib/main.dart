@@ -10,6 +10,7 @@ import 'ui/features/dashboard/dashboard_screen.dart';
 import 'ui/features/projects/project_list_screen.dart';
 import 'ui/features/tools/inclinometer_screen.dart';
 import 'ui/features/projects/new_project_screen.dart';
+import 'ui/features/profile/profile_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,6 +67,7 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
       ),
       ProjectListScreen(viewModel: widget.viewModel),
       InclinometerScreen(viewModel: widget.viewModel),
+      ProfileScreen(viewModel: widget.viewModel),
     ];
 
     return Scaffold(
@@ -73,19 +75,22 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
         index: _currentIndex,
         children: screens,
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: AppTheme.accentCyan,
+        foregroundColor: Colors.black,
+        icon: const Icon(Icons.add_rounded, fontWeight: FontWeight.bold),
+        label: const Text('New Project', style: TextStyle(fontWeight: FontWeight.bold)),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => NewProjectScreen(viewModel: widget.viewModel),
+            ),
+          );
+        },
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
-        onDestinationSelected: (idx) {
-          if (idx == 3) {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => NewProjectScreen(viewModel: widget.viewModel),
-              ),
-            );
-          } else {
-            setState(() => _currentIndex = idx);
-          }
-        },
+        onDestinationSelected: (idx) => setState(() => _currentIndex = idx),
         backgroundColor: AppTheme.primaryNavy,
         indicatorColor: AppTheme.accentCyan.withValues(alpha: 0.2),
         destinations: const [
@@ -105,9 +110,9 @@ class _MainNavigationShellState extends State<MainNavigationShell> {
             label: 'Level & Pitch',
           ),
           NavigationDestination(
-            icon: Icon(Icons.add_circle_outline_rounded, color: AppTheme.accentAmber),
-            selectedIcon: Icon(Icons.add_circle_rounded, color: AppTheme.accentAmber),
-            label: 'New Intake',
+            icon: Icon(Icons.person_outline_rounded),
+            selectedIcon: Icon(Icons.person_rounded, color: AppTheme.accentCyan),
+            label: 'Profile',
           ),
         ],
       ),

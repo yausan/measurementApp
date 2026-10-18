@@ -23,7 +23,7 @@ class _NewProjectScreenState extends State<NewProjectScreen> {
   final _clientPhoneController = TextEditingController();
   final _clientEmailController = TextEditingController();
   final _siteAddressController = TextEditingController();
-  final _technicianController = TextEditingController(text: 'Pooja Basoula (Field Tech)');
+  late TextEditingController _technicianController;
   DateTime _scheduledDate = DateTime.now();
 
   @override
@@ -31,6 +31,7 @@ class _NewProjectScreenState extends State<NewProjectScreen> {
     super.initState();
     final randomNum = (100 + widget.viewModel.projects.length + 1).toString().padLeft(3, '0');
     _projectNumberController = TextEditingController(text: 'PRJ-2026-$randomNum');
+    _technicianController = TextEditingController(text: widget.viewModel.technicianName);
   }
 
   @override
@@ -83,7 +84,7 @@ class _NewProjectScreenState extends State<NewProjectScreen> {
       clientEmail: _clientEmailController.text.trim(),
       siteAddress: _siteAddressController.text.trim(),
       technicianName: _technicianController.text.trim().isEmpty
-          ? 'Pooja Basoula (Field Tech)'
+          ? widget.viewModel.technicianName
           : _technicianController.text.trim(),
       scheduledDate: _scheduledDate,
       status: ProjectStatus.inProgress,
@@ -322,9 +323,9 @@ class _NewProjectScreenState extends State<NewProjectScreen> {
               const SizedBox(height: 6),
               TextFormField(
                 controller: _technicianController,
-                decoration: const InputDecoration(
-                  hintText: 'e.g. Pooja Basoula (Field Tech)',
-                  prefixIcon: Icon(Icons.badge_outlined, color: AppTheme.accentCyan),
+                decoration: InputDecoration(
+                  hintText: 'e.g. ${widget.viewModel.technicianName}',
+                  prefixIcon: const Icon(Icons.badge_outlined, color: AppTheme.accentCyan),
                 ),
               ),
 
